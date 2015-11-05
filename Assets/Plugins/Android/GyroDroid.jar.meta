@@ -1,0 +1,40 @@
+fileFormatVersion: 2
+guid: 7064b3eac24d19f4fbb9af68b2743a1a
+labels:
+- orientation
+- android
+- gyroscope
+- mobile
+- AR
+- sensors
+- gyro
+- plugin
+- sensor
+- rotation
+- augmentedreality
+- virtualreality
+- accelerometer
+- motion
+- motioncapture
+timeCreated: 1437154155
+licenseType: Free
+PluginImporter:
+  serializedVersion: 1
+  iconMap: {}
+  executionOrder: {}
+  isPreloaded: 0
+  platformData:
+    Android:
+      enabled: 1
+      settings:
+        CPU: ARMv7
+    Any:
+      enabled: 0
+      settings: {}
+    Editor:
+      enabled: 0
+      settings:
+        DefaultValueInitialized: true
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

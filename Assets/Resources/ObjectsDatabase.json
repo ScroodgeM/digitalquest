@@ -1,0 +1,87 @@
+{
+    "version": "LaureaAle",
+    "elements": "5",
+    "objects": [
+    	{
+    		"id": "1",
+    		"requires": "",
+    		"name": "Dove tutto ebbe inizio",
+    		"object": "Orb_01",
+    		"type": "1",
+    		"media": "",
+    		"points": "100",
+    		"lat": "45.478572",
+    		"lon": "9.232718",
+    		"scale": "1",
+    		"map": "yes",
+    		"pre": "Ciao :3.. Se stai leggendo questo messaggio vuol dire che avrai accettato la sfida B).. Ti ricordi questo posto :P?\nGrazie a quale tuo oggetto ero riuscito a scoprire la tua identità e poi a contattarti? Anche se nella realtà poi mi avevi contattato prima tu ahah\n\nNB: tutte le risposte non prevedono spazi",
+    		"answer": "patente,tessera,tesseradelpolitecnico,tesserapolitecnico",
+    		"post": "Facile no? :).. Ai tempi mi lamentavo di dover spendere così tanto tempo al Necst per un esame che avevo già dato e non mi avrebbe dato crediti. Col senno di poi sono felicissimo di aver dovuto lavorare così tanto sulle FPGA :P\nOra dirigiti esattamente al centro del perimetro che delimita la sede storica del Politecnico."
+    	},
+    	{
+    		"id": "2",
+    		"requires": "1",
+    		"name": "Oh tannenbaum",
+    		"object": "Plasma_01",
+    		"type": "1",
+    		"media": "",
+    		"points": "100",
+    		"lat": "45.478096",
+    		"lon": "9.228283",
+    		"scale": "1",
+    		"map": "yes",
+    		"pre": "Domanda easy: durante le nostre prime discussioni su facebook, che tipo di sensori ti avevo detto che mi ero \"autocostruito?\"",
+    		"answer": "eeg",
+    		"post": "E poi tu mi avevi parlato della mano robotica :P.. Le donne ingegnere sono già una rarità, ma di quelle poche tu anche hai qualcosa di speciale ^^\n\nPoi.. dove vai di solito a mangiare a pranzo? Lì in zona c'è un'area dedicata ai bimbi."
+    	},
+    	{
+    		"id": "3",
+    		"requires": "2",
+    		"name": "La mia bimba :P",
+    		"object": "Plasma_02",
+    		"type": "1",
+    		"media": "",
+    		"points": "100",
+    		"lat": "45.477742",
+    		"lon": "9.224143",
+    		"scale": "1",
+    		"map": "yes",
+    		"pre": "Mi sono sempre chiesto come possano i bimbi non ammazzarsi una volta saliti su quel coso xD.. Non vorrei citare robe smielate alla \"Piccoli per sempre\" (benché io lo stia facendo :P), tuttavia... cosa si può fare la sera invece di dormire?",
+    		"answer": "giocare,sigioca",
+    		"post": "Una delle cose che penso ci accomuni maggiormente è l'essere in fondo (ma neanche troppo eheh) ancora bambini. Penso la spontaneità e la curiosità siano delle qualità stupende, grazie alle quali è possibile non annoiarsi né invecchiare mai :)\n\nLa prossima tappa è inerente in forma alla fortuna.. o forse no."
+    	},
+    	{
+    		"id": "4",
+    		"requires": "3",
+    		"name": "Esami & tuffi",
+    		"object": "Plasma_03",
+    		"type": "1",
+    		"media": "",
+    		"points": "100",
+    		"lat": "45.479405",
+    		"lon": "9.228242",
+    		"scale": "1",
+    		"map": "yes",
+    		"pre": "Sapevi che dietro il Trifoglio c'è una piscina? Non ho mai provato ad andarci, da solo fastidio quando fai gli esami d'estate e dall'aula vedi gente che invece fa il bagno xP.. A proposito, quando dovevamo vederci prima della mia partenza (senza ancora sapere del NSW), pur di trovare una piscina dove andare insieme e avendo paura tu non volessi spostarti molto da Milano, avevo addirittura pensato di portarti.. dove?",
+    		"answer": "idroscalo",
+    		"post": "Non ci sono mai andato né so se in generale ne vale la pena, ma direi che il Ticino si è rivelato assolutamente meglio :P\n\nAbbiamo quasi finito, ora dirigiti dove hai scattato le foto dopo la tua discussione B)"
+    	},
+    	{
+    		"id": "5",
+    		"requires": "4",
+    		"name": "Laurea",
+    		"object": "Explode_01",
+    		"type": "1",
+    		"media": "",
+    		"points": "100",
+    		"lat": "45.479216",
+    		"lon": "9.233241",
+    		"scale": "1",
+    		"map": "yes",
+    		"pre": "Mai avrei immaginato saresti venuta quando quella mattina ti avevo proposto di venire con me a vedere le lanterne la sera stessa :P.. In che giorno del mese ci siamo conosciuti di persona? :)",
+    		"answer": "24",
+    		"post": "Come avrei voluto essere stato qui ad aspettarti, per darti quel tanto meritato bacio dopo la tua discussione di laurea.. siccome non è stato possibile quel giorno, eccomi qua con la caccia al tesoro :P.. Prova ad immaginare ora come sarebbe stato quel bacio.. e come saranno tutti quelli che arriveranno in futuro per recuperare ;)\n\nCongratulazioni amore mio <11"
+    	}
+    	   	  	
+    ]
+}
