@@ -21,7 +21,7 @@ public class QuestSelector : MonoBehaviour {
 
 	void Awake() {
 		if(PlayerPrefs.GetInt ("QuestId") > 0 && PlayerPrefs.GetString ("Team") != "") {
-			Application.LoadLevel(1);
+			Application.LoadLevel("Main");
 		}
 	}
 

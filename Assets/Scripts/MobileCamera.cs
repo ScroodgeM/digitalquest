@@ -7,13 +7,23 @@ public class MobileCamera : MonoBehaviour {
 	public Camera camera;
 	public bool openCv = false;
 	private WebCamTexture cameraTexture;
+	private Renderer renderer;
+
+	public DeferredNightVisionEffect cameraEffect;
 
 	//OpenCV
-	Mat rgbaMat;
+	Mat rgbaMat, grayMat;
 	Color32[] colors;
+
+	
+	private FaceRecognizer faceRecognizer;
+	private MatOfRect faces;
+	private CascadeClassifier faceDetector;
 
 	// Use this for initialization
 	void Start () {
+
+		renderer = GetComponent<Renderer> ();
 
 		float quadHeight = camera.orthographicSize * 2.0f;
 		float quadWidth = quadHeight * Screen.width / Screen.height;
@@ -37,7 +47,10 @@ public class MobileCamera : MonoBehaviour {
 		cameraTexture = new WebCamTexture(backCamName,480,270,10);
 		cameraTexture.Play();
 
-		GetComponent<Renderer>().material.mainTexture = cameraTexture;
+		renderer.material.mainTexture = cameraTexture;
+
+		//OpenCV
+		InitializeClassifiers ();
 
 	}
 
@@ -51,22 +64,60 @@ public class MobileCamera : MonoBehaviour {
 				#endif
 
 				colors = new Color32[cameraTexture.width * cameraTexture.height];
-				rgbaMat = new Mat (cameraTexture.height, cameraTexture.width, CvType.CV_8UC3);
+				rgbaMat = new Mat (cameraTexture.height, cameraTexture.width, CvType.CV_8UC4);
+				grayMat = new Mat (cameraTexture.height, cameraTexture.width, CvType.CV_8UC1);
 				Texture2D texture = new Texture2D (cameraTexture.width, cameraTexture.height, TextureFormat.RGBA32, false);
 
 				Utils.webCamTextureToMat (cameraTexture, rgbaMat, colors);
 				
-				
-				Mat grayMat = new Mat ();
 				Imgproc.cvtColor (rgbaMat, grayMat, Imgproc.COLOR_RGBA2GRAY);
 				
+				DetectFaces();
 
-				Utils.matToTexture2D (grayMat, texture, colors);
-				GetComponent<Renderer> ().material.mainTexture = texture;
+				Utils.matToTexture2D (rgbaMat, texture, colors);
+				renderer.material.mainTexture = texture;
 
 			}
 
 		}
+	}
+
+	void OnDisable () {
+		cameraTexture.Stop ();
+	}
+
+	public void SwitchMode() {
+		if (!openCv) {
+			openCv = true;
+			cameraEffect.enabled = true;
+			
+		} else {
+			openCv = false;
+			renderer.material.mainTexture = cameraTexture;
+			cameraEffect.enabled = false;
+		}
+	}
+
+
+	private void InitializeClassifiers() {
+
+			faceDetector = new CascadeClassifier (Utils.getFilePath ("lbpcascade_frontalface.xml"));
+			faces = new MatOfRect ();
+	}
+
+
+	private OpenCVForUnity.Rect[] DetectFaces() {
+		faceDetector.detectMultiScale (grayMat, faces, 1.1, 2, 2, // TODO: objdetect.CV_HAAR_SCALE_IMAGE
+		                               new Size (cameraTexture.height * 0.2, cameraTexture.height * 0.2), new Size ());
+		
+		OpenCVForUnity.Rect[] rects = faces.toArray ();
+		for (int i = 0; i < rects.Length; i++) {
+			//Debug.Log ("detect faces " + rects [i]);
+			
+			Core.rectangle (rgbaMat, new Point (rects [i].x, rects [i].y), new Point (rects [i].x + rects [i].width, rects [i].y + rects [i].height), new Scalar (255, 255, 0, 255), 2);
+		}
+		
+		return rects;
 	}
 
 }

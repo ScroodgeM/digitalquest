@@ -10,7 +10,7 @@ public class ServerConnection : MonoBehaviour {
 
 	private static ServerConnection instance;
 
-	private int questId, stepId = 0;
+	private int userId, questId, stepId = 0;
 
 	private ServerConnection() {}
 	public static ServerConnection Instance {
@@ -25,6 +25,7 @@ public class ServerConnection : MonoBehaviour {
 
 	void Awake () {
 		instance = this;
+		userId = PlayerPrefs.GetInt ("UserId");
 		deviceIdentifier = SystemInfo.deviceUniqueIdentifier;
 		baseUrl = "http://www.mastercava.it/digitalquest/";
 		questId = PlayerPrefs.GetInt ("QuestId");
@@ -43,11 +44,12 @@ public class ServerConnection : MonoBehaviour {
 	}
 	
 	private void RefreshConnection() {
-		WWW www = new WWW(baseUrl + "update.php?q=" + questId + "&id=" + deviceIdentifier + "&p=" + QuestManager.Instance.GetPoints() + "&lat=" + Input.location.lastData.latitude + "&lon=" + Input.location.lastData.longitude + "&acc=" + Input.location.lastData.horizontalAccuracy + "&t=" + PlayerPrefs.GetString("Team"));
+		Debug.Log (baseUrl + "update.php?q=" + questId + "&id=" + userId + "&p=" + QuestManager.Instance.GetPoints() + "&lat=" + Input.location.lastData.latitude + "&lon=" + Input.location.lastData.longitude + "&acc=" + Input.location.lastData.horizontalAccuracy + "&t=" + PlayerPrefs.GetString("Team"));
+		WWW www = new WWW(baseUrl + "update.php?q=" + questId + "&id=" + userId + "&p=" + QuestManager.Instance.GetPoints() + "&lat=" + Input.location.lastData.latitude + "&lon=" + Input.location.lastData.longitude + "&acc=" + Input.location.lastData.horizontalAccuracy + "&t=" + PlayerPrefs.GetString("Team"));
 	}
 
 	public void NextStep(int passedId, int gainedPoints) {
-		WWW www = new WWW(baseUrl + "step.php?q=" + questId + "&id=" + deviceIdentifier + "&s=" + passedId + "&p=" + gainedPoints + "&lat=" + Input.location.lastData.latitude + "&lon=" + Input.location.lastData.longitude + "&acc=" + Input.location.lastData.horizontalAccuracy);
+		WWW www = new WWW(baseUrl + "step.php?q=" + questId + "&id=" + userId + "&s=" + passedId + "&p=" + gainedPoints + "&lat=" + Input.location.lastData.latitude + "&lon=" + Input.location.lastData.longitude + "&acc=" + Input.location.lastData.horizontalAccuracy);
 		stepId = passedId;
 	}
 
@@ -73,14 +75,16 @@ public class ServerConnection : MonoBehaviour {
 		// Create a Web Form
 		WWWForm form = new WWWForm();
 		form.AddField("frameCount", Time.frameCount.ToString());
+		form.AddField("userId", userId);
 		form.AddField("deviceId", deviceIdentifier);
 		form.AddField("questId", questId);
 		//form.AddField("stepId", stepId);
 		form.AddField("stepId", objectId);
 		form.AddBinaryData("file", bytes, "screenshot.jpg", "image/jpeg");
-		// Upload to a cgi script    
+		Debug.Log ("Screenshot uploading to server...");
+		// Upload to a cgi script
 		WWW w = new WWW(screenShotURL, form);
-		yield return w;
+		while(!w.isDone) yield return w;
 		if (w.error != null){
 			Debug.Log(w.error);
 
@@ -110,8 +114,7 @@ public class ServerConnection : MonoBehaviour {
 
 	private IEnumerator RetrieveGameDataCoroutine() {
 		Debug.Log ("Gathering saved data...");
-		WWW www = new WWW(baseUrl + "load.php?q=" + PlayerPrefs.GetInt("QuestId") + "&id=" + deviceIdentifier);
-		//Debug.Log (url + "load.php?q=" + PlayerPrefs.GetInt("QuestId") + "&id=" + deviceIdentifier);
+		WWW www = new WWW(baseUrl + "load.php?q=" + PlayerPrefs.GetInt("QuestId") + "&id=" + userId);
 		while (!www.isDone)
 			yield return www.progress;
 		Debug.Log (www.text);
@@ -134,8 +137,7 @@ public class ServerConnection : MonoBehaviour {
 
 	private IEnumerator ResetQuestDataCoroutine() {
 		Debug.Log ("Eliminating saved data...");
-		WWW www = new WWW(baseUrl + "reset.php?q=" + PlayerPrefs.GetInt("QuestId") + "&id=" + deviceIdentifier);
-		//Debug.Log (url + "reset.php?q=" + PlayerPrefs.GetInt("QuestId") + "&id=" + deviceIdentifier);
+		WWW www = new WWW(baseUrl + "reset.php?q=" + PlayerPrefs.GetInt("QuestId") + "&id=" + userId);
 		while (!www.isDone)
 			yield return www.progress;
 		if (www.error != null) {

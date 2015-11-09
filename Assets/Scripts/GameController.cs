@@ -2,6 +2,7 @@
 using System.Collections;
 //using SimpleJSON;
 using UnityEngine.UI;
+using Facebook.Unity;
 
 public class GameController : MonoBehaviour {
 
@@ -244,7 +245,7 @@ public class GameController : MonoBehaviour {
 	}
 
 	private IEnumerator AsyncLoading() {
-		AsyncOperation async = Application.LoadLevelAsync (0);
+		AsyncOperation async = Application.LoadLevelAsync ("Opening");
 		while(!async.isDone) {
 			SetLoadingBar(async.progress);
 			yield return async;
@@ -273,6 +274,12 @@ public class GameController : MonoBehaviour {
 		QuestManager.Instance.CloseDetailWindow ();
 		CloseQuestWindow ();
 		PlayAudio ("Magic1");
+	}
+
+	public void Logout() {
+		PlayerPrefs.DeleteAll ();
+		FB.LogOut ();
+		Application.LoadLevelAsync ("Login");
 	}
 
 }
