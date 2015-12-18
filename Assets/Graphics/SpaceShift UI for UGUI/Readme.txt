@@ -1,4 +1,4 @@
-SpaceShift Mobile UI for UGUI (v1.3)
+SpaceShift Mobile UI for UGUI (v1.7)
 April 11, 2015
 
 Artist: EvilSystem (evilsystem.eu / evil-s.deviantart.com )
@@ -14,7 +14,7 @@ The product features:
 - PSD Files 
 - Vector Design (Scalable) 
 - Sliced images (PNG, High Resolution) 
-- 42 button icons 
+- 45 button icons 
 - Fonts included 
 - Custom scripts 
 - Demo scenes 

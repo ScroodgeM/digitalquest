@@ -2,7 +2,7 @@
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI.Tweens;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 namespace UnityEngine.UI
 {
@@ -107,16 +107,12 @@ namespace UnityEngine.UI
 		{
 			if (!string.IsNullOrEmpty(this.m_LoadScene))
 			{
-				Application.LoadLevel(this.m_LoadScene);
+				SceneManager.LoadScene(this.m_LoadScene);
 			}
 			else
 			{
 				this.StartDemoTween();
 			}
-		}
-
-		public void SetValue(float value) {
-			SetFillAmount(value);
 		}
 	}
 }

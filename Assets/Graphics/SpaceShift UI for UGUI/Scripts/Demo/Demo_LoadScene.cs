@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using UnityEngine.SceneManagement;
 
 public class Demo_LoadScene : MonoBehaviour {
 
@@ -8,6 +8,6 @@ public class Demo_LoadScene : MonoBehaviour {
 	public void LoadScene()
 	{
 		if (!string.IsNullOrEmpty(this.scene))
-			Application.LoadLevel(this.scene);
+			SceneManager.LoadScene(this.scene);
 	}
 }
