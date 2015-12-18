@@ -27,15 +27,10 @@ namespace UnityEngine.UI
 			
 			if (this.m_Group == null)
 				this.m_Group = this.gameObject.AddComponent<CanvasGroup>();
-
-			this.m_Group.alpha = 0f;
-			//this.StartAlphaTween(0f, this.m_Duration, true);
+			
+			this.StartAlphaTween(0f, this.m_Duration, true);
 		}
-
-		public void Appear() {
-			this.StartAlphaTween(1f, this.m_Duration, true);
-		}
-
+		
 		/// <summary>
 		/// Tweens the canvas group alpha.
 		/// </summary>
@@ -80,9 +75,8 @@ namespace UnityEngine.UI
 		{
 			if (this.m_Group == null)
 				return;
-
-			if(this.m_Group.alpha == 1f) this.StartAlphaTween(0f, this.m_Duration/2f, true);
-			//this.StartAlphaTween((this.m_Group.alpha == 1f ? 0f : 1f), this.m_Duration, true);
+				
+			this.StartAlphaTween((this.m_Group.alpha == 1f ? 0f : 1f), this.m_Duration, true);
 		}
 	}
 }

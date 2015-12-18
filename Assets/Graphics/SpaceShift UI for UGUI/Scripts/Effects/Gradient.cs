@@ -5,14 +5,38 @@ using System.Collections.Generic;
 namespace UnityEngine.UI
 {
 	[AddComponentMenu("UI/Effects/Gradient")]
-	public class Gradient : BaseVertexEffect {
-		
-		[SerializeField] private Color topColor = Color.white;
+#if UNITY_5_2
+    public class Gradient : BaseMeshEffect
+#else
+    public class Gradient : BaseVertexEffect
+#endif
+    {
+        [SerializeField] private Color topColor = Color.white;
 		[SerializeField] private Color bottomColor = Color.black;
-		
-		public override void ModifyVertices(List<UIVertex> vertexList)
-		{
-			if (!this.IsActive())
+
+#if UNITY_5_2
+		public override void ModifyMesh(VertexHelper vertexHelper)
+        {
+            if (!this.IsActive())
+                return;
+
+            List<UIVertex> list = new List<UIVertex>();
+            vertexHelper.GetUIVertexStream(list);
+
+            ModifyVertices(list);  // calls the old ModifyVertices which was used on pre 5.2
+
+			vertexHelper.Clear();
+            vertexHelper.AddUIVertexTriangleStream(list);
+        }
+#endif
+
+#if UNITY_5_2
+        public void ModifyVertices(List<UIVertex> vertexList)
+#else
+        public override void ModifyVertices(List<UIVertex> vertexList)
+#endif
+        {
+            if (!this.IsActive())
 				return;
 			
 			int count = vertexList.Count;

@@ -790,7 +790,7 @@ namespace UnityEngine.UI
 			UISlotBase source = (eventData.pointerPress != null) ? eventData.pointerPress.GetComponent<UISlotBase>() : null;
 			
 			// Make sure we have the source slot
-			if (source == null)
+			if (source == null || !source.IsAssigned())
 				return;
 			
 			// Notify the source that a drop was performed so it does not unassign

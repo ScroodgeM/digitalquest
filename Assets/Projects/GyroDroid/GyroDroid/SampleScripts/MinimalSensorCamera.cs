@@ -22,11 +22,17 @@ public class MinimalSensorCamera : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		// direct Sensor usage:
-		// transform.rotation = Sensor.rotationQuaternion; --- is the same as Sensor.QuaternionFromRotationVector(Sensor.rotationVector);
+		#if UNITY_IOS
+			transform.rotation = Input.gyro.attitude;
+			transform.Rotate( 0f, 0f, 180f, Space.Self ); // Swap "handedness" of quaternion from gyro.
+			transform.Rotate( 90f, 180f, 0f, Space.World );
+		#else
+			// transform.rotation = Sensor.rotationQuaternion; --- is the same as Sensor.QuaternionFromRotationVector(Sensor.rotationVector);
 		
-		// Helper with fallback:
-		#if (!UNITY_EDITOR)
-		transform.rotation = SensorHelper.rotation;
+			// Helper with fallback:
+			#if (!UNITY_EDITOR)
+				transform.rotation = SensorHelper.rotation;
+			#endif
 		#endif
 	}
 }

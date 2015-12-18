@@ -102,11 +102,6 @@ namespace UnityEngine.UI
 			floatTween.ignoreTimeScale = true;
 			this.m_FloatTweenRunner.StartTween(floatTween);
 		}
-
-		public void SetValue(float value) {
-			this.m_FillAmount = value;
-			this.FillAmountChanged ();
-		}
 		
 		protected void OnTweenFinished()
 		{
@@ -118,6 +113,10 @@ namespace UnityEngine.UI
 			{
 				this.StartDemoTween();
 			}
+		}
+
+		public void SetValue(float value) {
+			SetFillAmount(value);
 		}
 	}
 }

@@ -7,7 +7,7 @@ using Facebook.Unity;
 public class GameController : MonoBehaviour {
 
 	public GameObject playButton, gameButtons;
-	public GameObject questWindow, questList;
+	public GameObject questWindow, questList, imageWindow;
 	public GameObject settingsWindow, errorWindow;
 	public GameObject loadingBar;
 	public GameObject notification;
@@ -17,6 +17,7 @@ public class GameController : MonoBehaviour {
 	public Text accuracyText;
 	public GameObject redAlert;
 	public Slider fovSlider;
+	public RawImage displayImage;
 
 	private static GameController instance;
 
@@ -282,4 +283,21 @@ public class GameController : MonoBehaviour {
 		Application.LoadLevelAsync ("Login");
 	}
 
+	public void DisplayImage(string url) {
+		imageWindow.SetActive (true);
+		StartCoroutine (LoadImage(url));
+	}
+
+	private IEnumerator LoadImage(string url) {
+		WWW www = new WWW(url);
+		while (!www.isDone) {
+			yield return www;
+		}
+		displayImage.texture = www.texture;
+	}
+
+	public void CloseImageWindow() {
+		imageWindow.SetActive (false);
+		PlayAudio ("Cancel1");
+	}
 }

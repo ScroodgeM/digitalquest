@@ -56,7 +56,7 @@ namespace UnityEngine.UI
 				if (this.m_ActivePress != null)
 				{
 					if (instant || (!pressed && this.m_InstaOut))
-						this.m_ActivePress.canvasRenderer.SetAlpha((pressed ? 1f : 0f));
+						this.m_ActivePress.CrossFadeAlpha((pressed ? 1f : 0f), 0f, true);
 					else
 						this.m_ActivePress.CrossFadeAlpha((pressed ? 1f : 0f), 0.1f, true);
 				}
@@ -66,7 +66,7 @@ namespace UnityEngine.UI
 				if (this.m_InactivePress != null)
 				{
 					if (instant || this.m_InstaOut)
-						this.m_InactivePress.canvasRenderer.SetAlpha(0f);
+						this.m_InactivePress.CrossFadeAlpha(0f, 0f, true);
 					else
 						this.m_InactivePress.CrossFadeAlpha(0f, 0.1f, true);
 				}
@@ -77,7 +77,7 @@ namespace UnityEngine.UI
 				if (this.m_InactivePress != null)
 				{
 					if (instant || (!pressed && this.m_InstaOut))
-						this.m_InactivePress.canvasRenderer.SetAlpha((pressed ? 1f : 0f));
+						this.m_InactivePress.CrossFadeAlpha((pressed ? 1f : 0f), 0f, true);
 					else
 						this.m_InactivePress.CrossFadeAlpha((pressed ? 1f : 0f), 0.1f, true);
 				}
@@ -87,7 +87,7 @@ namespace UnityEngine.UI
 				if (this.m_ActivePress != null)
 				{
 					if (instant || this.m_InstaOut)
-						this.m_ActivePress.canvasRenderer.SetAlpha(0f);
+						this.m_ActivePress.CrossFadeAlpha(0f, 0f, true);
 					else
 						this.m_ActivePress.CrossFadeAlpha(0f, 0.1f, true);
 				}

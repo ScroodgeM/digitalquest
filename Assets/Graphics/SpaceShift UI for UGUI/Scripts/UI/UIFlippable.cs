@@ -5,9 +5,12 @@ using System.Collections.Generic;
 namespace UnityEngine.UI
 {
 	[RequireComponent(typeof(RectTransform)), RequireComponent(typeof(Graphic)), DisallowMultipleComponent, AddComponentMenu("UI/Flippable")]
-	public class UIFlippable : MonoBehaviour, IVertexModifier {
-		
-		[SerializeField] private bool m_Horizontal = false;
+#if UNITY_5_2
+    public class UIFlippable : MonoBehaviour, IMeshModifier {
+#else
+    public class UIFlippable : MonoBehaviour, IVertexModifier {
+#endif
+        [SerializeField] private bool m_Horizontal = false;
 		[SerializeField] private bool m_Veritical = false;
 		
 		/// <summary>
@@ -36,10 +39,49 @@ namespace UnityEngine.UI
 			this.GetComponent<Graphic>().SetVerticesDirty();
 		}
 #endif
-		
-		public void ModifyVertices(List<UIVertex> verts)
+
+#if UNITY_5_2
+		public void ModifyMesh(VertexHelper vertexHelper)
 		{
-			RectTransform rt = this.transform as RectTransform;
+			if (!this.enabled)
+				return;
+			
+			List<UIVertex> list = new List<UIVertex>();
+			vertexHelper.GetUIVertexStream(list);
+			
+			ModifyVertices(list);  // calls the old ModifyVertices which was used on pre 5.2
+			
+			vertexHelper.Clear();
+			vertexHelper.AddUIVertexTriangleStream(list);
+		}
+
+        public void ModifyMesh(Mesh mesh)
+        {
+            if (!this.enabled)
+                return;
+
+            List<UIVertex> list = new List<UIVertex>();
+            using (VertexHelper vertexHelper = new VertexHelper(mesh))
+            {
+                vertexHelper.GetUIVertexStream(list);
+            }
+
+            ModifyVertices(list);  // calls the old ModifyVertices which was used on pre 5.2
+
+            using (VertexHelper vertexHelper2 = new VertexHelper())
+            {
+                vertexHelper2.AddUIVertexTriangleStream(list);
+                vertexHelper2.FillMesh(mesh);
+            }
+        }
+#endif
+
+        public void ModifyVertices(List<UIVertex> verts)
+		{
+            if (!this.enabled)
+                return;
+
+            RectTransform rt = this.transform as RectTransform;
 			
 			for (int i = 0; i < verts.Count; ++i)
 			{

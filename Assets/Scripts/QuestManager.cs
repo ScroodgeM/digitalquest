@@ -29,7 +29,7 @@ public class QuestManager : MonoBehaviour {
 
 	public GameObject detailWindow;
 	public GameObject answerForm;
-	public GameObject objectsContainer;
+	public GameObject objectsContainer, hintsContainer;
 	public InputField answer;
 	public Button answerButton;
 	public GameObject showOnMapButton;
@@ -183,6 +183,25 @@ public class QuestManager : MonoBehaviour {
 			mapObject.transform.SetParent(objectsContainer.transform);
 			worldObject.transform.SetParent(objectsContainer.transform);
 
+			//Hints
+			if(obj["hints"] != null) {
+				foreach(JSONNode hint in obj["hints"].AsArray.Childs) {
+					Debug.Log("Hint of type: " + hint["type"].AsInt);
+					//Decide basing on hint type
+					switch(hint["type"].AsInt) {
+						case 3:
+							UnityEngine.Object res = Resources.Load("SoundZone");
+							GameObject soundZone = (GameObject) GameObject.Instantiate(res);
+							soundZone.transform.position = new Vector3(0f, 1f, 0f);
+							soundZone.transform.SetParent(hintsContainer.transform);
+							res = Resources.Load("ZonePrefab");
+							GameObject mapZone = (GameObject) GameObject.Instantiate(res);
+							mapZone.transform.position = new Vector3(0f, 100f, 0f);
+							mapZone.transform.SetParent(hintsContainer.transform);
+							break;
+					}
+				}
+			}
 		}
 
 
@@ -212,13 +231,22 @@ public class QuestManager : MonoBehaviour {
 		//Quest
 		if(quest != null && !solved.Contains(obj.objectId)) {
 
-			//Audio
+			//Image
 			if(quest["type"].AsInt == 2 && quest["media"].Value != "") {
+				GameController.Instance.DisplayImage(quest["media"].Value);
+			}
+
+			//Audio
+			if(quest["type"].AsInt == 3 && quest["media"].Value != "") {
 				ServerConnection.Instance.StreamAudioFromURL(quest["media"].Value);
 			}
 
+			/*
 			//Video
-			//Handheld.PlayFullScreenMovie ("Riddle.mp4", Color.black, FullScreenMovieControlMode.Minimal);
+			if(quest["type"].AsInt == 3 && quest["media"].Value != "") {
+				Handheld.PlayFullScreenMovie (quest["media"].Value, Color.black, FullScreenMovieControlMode.Minimal);
+			}
+			*/
 
 			//No answer needed -> Solved!
 			if(quest["answer"].Value == "") {
@@ -254,7 +282,10 @@ public class QuestManager : MonoBehaviour {
 			Image icon = questElement.transform.GetChild(0).GetChild(0).GetComponent<Image>();
 			icon.sprite = questDone;
 		}
-		if(points >= maxPoints) GameController.Instance.PlayAudio ("Victory1");
+		if (points >= maxPoints) {
+			Debug.Log(points + "/" + maxPoints + " points");
+			GameController.Instance.PlayAudio ("Victory1");
+		}
 		else GameController.Instance.PlayAudio ("Color");
 		GameController.Instance.SetPoints(points);
 

@@ -94,7 +94,7 @@ namespace OpenCVForUnitySample
 								rgbaMat.Dispose ();
 								grayMat.Dispose ();
 						}
-
+						yield return new WaitForSeconds (3f);
 						// Checks how many and which cameras are available on the device
 						for (int cameraIndex = 0; cameraIndex < WebCamTexture.devices.Length; cameraIndex++) {
 
