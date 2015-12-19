@@ -172,7 +172,7 @@ public class QuestManager : MonoBehaviour {
 			location.height = 10000;
 
 			//Object in world
-			UnityEngine.Object worldResource = Resources.Load ("Objects/"+obj["object"]);
+			UnityEngine.Object worldResource = Resources.Load ("Objects/Battery_0" + UnityEngine.Random.Range(1,2)); //+obj["object"]);
 			GameObject worldObject = (GameObject) GameObject.Instantiate(worldResource);
 			worldObject.transform.position = new Vector3(0f, 1000f, 0f);
 			CollectObject script = worldObject.AddComponent<CollectObject>();

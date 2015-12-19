@@ -114,5 +114,10 @@ namespace UnityEngine.UI
 				this.StartDemoTween();
 			}
 		}
+
+		public void SetValue(float value) {
+			this.m_FillAmount = value;
+			this.FillAmountChanged ();
+		}
 	}
 }

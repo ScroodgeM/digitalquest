@@ -142,6 +142,7 @@ Pass {
       ENDCG
   }
 // 2: simulates more chromatic aberration effects
+
 Pass {
 	  ZTest Always Cull Off ZWrite Off
 
@@ -153,6 +154,7 @@ Pass {
       ENDCG
   }  
 }
+
 
 Fallback off
 	

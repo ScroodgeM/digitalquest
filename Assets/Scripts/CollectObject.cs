@@ -13,7 +13,7 @@ public class CollectObject : MonoBehaviour {
 	IEnumerator SetPosition() {
 		yield return new WaitForSeconds(0.1f);
 		Debug.Log ("Updating position");
-		transform.position = new Vector3 (mapObject.transform.position.x * GameController.mapScale, 1.5f, mapObject.transform.position.z * GameController.mapScale);
+		transform.position = new Vector3 (mapObject.transform.position.x * GameController.mapScale, 0.5f /* 1.5f */, mapObject.transform.position.z * GameController.mapScale);
 	}
 
 	void OnMouseDown() {

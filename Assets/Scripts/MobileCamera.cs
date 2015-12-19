@@ -79,6 +79,8 @@ public class MobileCamera : MonoBehaviour {
 		//OpenCV
 		InitializeClassifiers ();
 
+		yield return null;
+
 	}
 
 	void LateUpdate() {
